@@ -13,7 +13,10 @@ import Layout from './Layout';
 import posts from './posts';
 import users from './users';
 import tags from './tags';
+import notes from './notes';
 import { parseBool } from "./helpers";
+
+// import { ListGuesser } from 'react-admin';
 
 let authProvider;
 let dataProvider;
@@ -55,6 +58,7 @@ render(
             <Resource name="comments" {...comments} />,
             permissions ? <Resource name="users" {...users} /> : null,
             <Resource name="tags" {...tags} />,
+            <Resource name="notes" {...notes} />
         ]}
     </Admin>,
     document.getElementById('root')

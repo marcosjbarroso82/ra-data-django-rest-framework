@@ -1,0 +1,27 @@
+version: "3.7"
+services:
+ 
+
+
+  backend:
+    env_file: .env
+    build:
+      context: ./backend
+    volumes:
+      - ./backend:/usr/src/app
+    ports:
+      - "8000:8000"
+    command: python manage.py runserver 0.0.0.0:8000
+
+  client:
+    build:
+        context: ./client
+    ports:
+      - "3000:3000"
+    container_name: client
+    stdin_open: true
+    volumes:
+       - ./client:/usr/src/app
+      #  - /usr/src/app/client/node_modules
+    depends_on:
+      - backend
