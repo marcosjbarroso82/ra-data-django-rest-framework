@@ -1,0 +1,26 @@
+FROM python:3.10
+
+ARG EXTRA_PACKAGES
+ARG ENVIRONMENT
+
+ENV PYTHONUNBUFFERED 1
+
+RUN apt-get update -y \
+    && apt-get -y install binutils $EXTRA_PACKAGES \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN mkdir -p /usr/src/app && cd /usr/src/app
+
+WORKDIR /usr/src/app
+
+COPY . /usr/src/app
+
+RUN pip install -r /usr/src/app/requirements.txt --no-cache-dir
+
+RUN python manage.py migrate
+RUN python manage.py loaddata initial
+
+# RUN chmod 777 /usr/src/app/run.sh
+# CMD ['/usr/src/app/run.sh']
+
+CMD ["python manage.py runserver 0.0.0.0:8000"]

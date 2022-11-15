@@ -64,3 +64,14 @@ class Comment(models.Model):
     class Meta:
         verbose_name = "Comment"
         verbose_name_plural = "Comments"
+
+
+class Note(models.Model):
+    post = models.ForeignKey(Post, verbose_name="post", on_delete=models.CASCADE)
+    note = models.IntegerField("note")
+    created_at = models.DateField("created_at", auto_now_add=True, blank=True)
+    author = models.ForeignKey(Author, verbose_name="author", on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = "Note"
+        verbose_name_plural = "Notes"

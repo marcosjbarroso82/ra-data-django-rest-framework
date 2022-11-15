@@ -1,6 +1,6 @@
 import django_filters
 
-from exampleapp.models import Author, Comment, Post, Tag
+from exampleapp.models import Author, Comment, Post, Tag, Note
 
 
 class PostFilter(django_filters.FilterSet):
@@ -17,3 +17,10 @@ class UserFilterSet(django_filters.FilterSet):
     class Meta:
         model = Author
         fields = ["name"]
+
+class NoteFilter(django_filters.FilterSet):
+    note = django_filters.CharFilter(field_name="note", lookup_expr="contains")
+
+    class Meta:
+        model = Note
+        fields = ["note"]

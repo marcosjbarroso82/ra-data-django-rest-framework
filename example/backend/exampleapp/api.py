@@ -3,10 +3,15 @@ import json
 from django.contrib.auth.models import Group
 from rest_framework import authentication, permissions, serializers, viewsets
 
-from exampleapp.models import Author, Comment, Post, Tag
+from exampleapp.models import Author, Comment, Post, Tag, Note
 
 from . import filters
 
+
+class NoteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Note
+        fields = "__all__"
 
 def update_instance(instance, validated_data):
     for attr, value in validated_data.items():
@@ -102,3 +107,9 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = AuthorSerializer
     filterset_class = filters.UserFilterSet
     search_fields = ["name"]
+
+class NoteViewSet(viewsets.ModelViewSet):
+    queryset = Note.objects.all()
+    serializer_class = NoteSerializer
+    filterset_class = filters.NoteFilter
+    search_fields = ["note"]
